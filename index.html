@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+    <script src='./node_modules/web3/dist/web3.min.js'></script>
+</head>
+<body>
+    <input type="text" />Instructor Name
+    <input type="text" />Instructor Age
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        }
+        else {
+            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+        }
+
+        // Choose first account
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var cAbi = [
+            {
+                "inputs": [],
+                "name": "getInstructor",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_fName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "_age",
+                        "type": "uint8"
+                    }
+                ],
+                "name": "setInstructor",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        var CoursetroContract = new web3.eth.Contract(cAbi, '0xf8e81D47203A594245E36C48e151709F0C19fBe8');
+
+
+        //console.log(CoursetroContract);
+
+        CoursetroContract.methods.getInstructor().call().then((result) => {
+            console.log(result);
+        });
+
+        //contract.methods.totalVotesFor(web3.utils.asciiToHex(candidateName)).call().then((f) => {
+        //    $("#" + div_id).html(f);
+        //})
+
+    </script>
+</body>
+</html>
